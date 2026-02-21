@@ -15,11 +15,11 @@ const VideoPlayer = ({ videoId, title, isShort = true }: VideoPlayerProps) => {
 
   const embedUrl = isShort
     ? `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0&playsinline=1&loop=1&playlist=${videoId}`
-    : `https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0&showinfo=0`;
+    : `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&modestbranding=1&rel=0&showinfo=0`;
 
   return (
     <div
-      className={`relative overflow-hidden rounded-xl bg-card group cursor-pointer ${
+      className={`relative overflow-hidden rounded-xl bg-card group cursor-pointer border border-primary/15 hover:border-primary/30 transition-all duration-500 ${
         isShort ? "aspect-[9/16]" : "aspect-video"
       }`}
       onClick={() => !playing && setPlaying(true)}
@@ -40,18 +40,20 @@ const VideoPlayer = ({ videoId, title, isShort = true }: VideoPlayerProps) => {
               loading="lazy"
             />
             {/* Overlay */}
-            <div className="absolute inset-0 bg-background/30 group-hover:bg-background/20 transition-colors duration-500" />
+            <div className="absolute inset-0 bg-background/30 group-hover:bg-background/15 transition-colors duration-500" />
 
-            {/* Play button */}
+            {/* Play button - larger white area */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:shadow-lg group-hover:shadow-primary/30">
-                <svg
-                  className="w-5 h-5 text-primary-foreground ml-0.5"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:shadow-lg group-hover:shadow-primary/30">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary-foreground/95 flex items-center justify-center">
+                  <svg
+                    className="w-4 h-4 md:w-5 md:h-5 text-primary ml-0.5"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
               </div>
             </div>
 

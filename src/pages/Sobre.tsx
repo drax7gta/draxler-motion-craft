@@ -3,6 +3,11 @@ import { useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+const blurFadeUp = {
+  initial: { opacity: 0, y: 25, filter: "blur(6px)" },
+  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+};
+
 const Sobre = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
@@ -13,9 +18,9 @@ const Sobre = () => {
       <main className="pt-28 md:pt-36 pb-24" ref={ref}>
         <div className="max-w-4xl mx-auto px-6 md:px-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
+            initial={blurFadeUp.initial}
+            animate={inView ? blurFadeUp.animate : {}}
+            transition={{ duration: 0.7 }}
             className="mb-16"
           >
             <p className="text-sm font-medium tracking-[0.2em] uppercase text-primary mb-3">
@@ -29,10 +34,10 @@ const Sobre = () => {
           <div className="grid md:grid-cols-[1fr_1.2fr] gap-12 md:gap-16 items-start">
             {/* Info card */}
             <motion.div
-              initial={{ opacity: 0, y: 25 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              className="p-8 rounded-2xl border border-border/40 bg-card/50"
+              initial={blurFadeUp.initial}
+              animate={inView ? blurFadeUp.animate : {}}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="p-8 rounded-2xl border border-border/30 bg-card/40"
             >
               <div className="space-y-4">
                 <div>
@@ -61,9 +66,9 @@ const Sobre = () => {
 
             {/* Bio text */}
             <motion.div
-              initial={{ opacity: 0, y: 25 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              initial={blurFadeUp.initial}
+              animate={inView ? blurFadeUp.animate : {}}
+              transition={{ duration: 0.6, delay: 0.3 }}
               className="space-y-6"
             >
               <p className="text-lg text-foreground/90 leading-relaxed">
@@ -85,18 +90,6 @@ const Sobre = () => {
               <p className="text-muted-foreground leading-relaxed">
                 Se você precisa de um criativo que realmente funciona, a gente devia conversar.
               </p>
-
-              <a
-                href="https://wa.me/5521979108337?text=Ol%C3%A1%20Draxler%2C%20vim%20pelo%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20falar%20sobre%20um%20projeto."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-medium rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:scale-[1.02] mt-4"
-              >
-                Falar comigo
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
             </motion.div>
           </div>
         </div>

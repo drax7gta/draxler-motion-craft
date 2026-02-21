@@ -23,17 +23,35 @@ const Footer = () => {
         </div>
 
         <div className="mt-10 pt-8 border-t border-border/30 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-muted-foreground/60">
-            © {new Date().getFullYear()} Draxler. Todos os direitos reservados.
-          </p>
-          <a
-            href="https://wa.me/5521979108337?text=Ol%C3%A1%20Draxler%2C%20vim%20pelo%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20falar%20sobre%20um%20projeto."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-muted-foreground/60 hover:text-primary transition-colors"
-          >
-            WhatsApp
-          </a>
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-xs text-muted-foreground/60">
+            <p>© {new Date().getFullYear()} Draxler. Todos os direitos reservados.</p>
+            <span className="hidden sm:inline">·</span>
+            <p>CNPJ 64.889.086/0001-38</p>
+          </div>
+          <div className="flex items-center gap-6 text-xs text-muted-foreground/60">
+            <a
+              href="https://www.instagram.com/draxler.nt/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary transition-colors"
+            >
+              Instagram
+            </a>
+            <a
+              href="mailto:gustavo.editor07@gmail.com"
+              className="hover:text-primary transition-colors"
+            >
+              Email
+            </a>
+            <a
+              href="https://wa.me/+5521979108337"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary transition-colors"
+            >
+              WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </footer>
