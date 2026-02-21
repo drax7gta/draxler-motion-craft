@@ -1,55 +1,49 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const feedbacks = [
   {
     id: 1,
-    name: "Cliente 01",
-    text: "O Draxler entregou um criativo que superou minhas expectativas. O vídeo performou muito acima da média nas campanhas.",
+    name: "Miguel — Lava Jato",
+    text: "Curtiu demais o vídeo e ficou animado para projetos futuros juntos. Uma parceria que tá só começando.",
   },
   {
     id: 2,
-    name: "Cliente 02",
-    text: "Profissional demais. Roteiro, edição, narração e timing perfeitos. Já estamos no terceiro projeto juntos.",
+    name: "QR Mídia",
+    text: "A equipe toda aprovou o resultado do vídeo. Quando todo mundo bate o olho e gosta, é porque ficou certo.",
   },
   {
     id: 3,
-    name: "Cliente 03",
-    text: "Nunca vi alguém tão novo entregar com tanta qualidade. O cara entende de retenção e sabe o que funciona.",
+    name: "Axen",
+    text: "Gostaram muito do vídeo. A agência que me contratou destacou a entrega antes do prazo combinado e a qualidade do trabalho.",
   },
   {
     id: 4,
-    name: "Cliente 04",
-    text: "Os criativos do Draxler mudaram o jogo dos meus anúncios. Taxa de conversão subiu 40% depois que começamos a trabalhar juntos.",
-  },
-  {
-    id: 5,
-    name: "Cliente 05",
-    text: "Rápido, criativo e sempre preocupado com resultado. Recomendo de olhos fechados.",
-  },
-  {
-    id: 6,
-    name: "Cliente 06",
-    text: "O diferencial dele é pensar no vídeo como estratégia, não só como edição. Isso faz toda a diferença no resultado final.",
+    name: "Conveniência Souza",
+    text: "Só elogios. O vídeo superou o que esperavam e o feedback foi extremamente positivo do começo ao fim.",
   },
 ];
+
+const blurFadeUp = {
+  initial: { opacity: 0, y: 25, filter: "blur(6px)" },
+  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+};
 
 const Feedbacks = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
-  const [selected, setSelected] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <main className="pt-28 md:pt-36 pb-24" ref={ref}>
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <div className="max-w-5xl mx-auto px-6 md:px-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
+            initial={blurFadeUp.initial}
+            animate={inView ? blurFadeUp.animate : {}}
+            transition={{ duration: 0.7 }}
             className="mb-16"
           >
             <p className="text-sm font-medium tracking-[0.2em] uppercase text-primary mb-3">
@@ -63,31 +57,37 @@ const Feedbacks = () => {
             </p>
           </motion.div>
 
-          {/* Masonry grid */}
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {feedbacks.map((feedback, i) => (
               <motion.div
                 key={feedback.id}
-                initial={{ opacity: 0, y: 25 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="break-inside-avoid group"
+                initial={blurFadeUp.initial}
+                animate={inView ? blurFadeUp.animate : {}}
+                transition={{ duration: 0.6, delay: i * 0.12 }}
+                className="group"
               >
-                <div
-                  className="relative p-6 md:p-8 rounded-2xl border border-border/40 bg-card/50 hover:bg-card hover:border-border/80 transition-all duration-500 cursor-pointer hover:shadow-lg hover:shadow-primary/5"
-                  onClick={() => setSelected(selected === feedback.id ? null : feedback.id)}
-                >
+                <div className="relative p-7 md:p-8 rounded-2xl border border-border/30 bg-card/40 hover:bg-card/70 hover:border-border/60 transition-all duration-500">
+                  {/* Inner glow on hover */}
+                  <div
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                    style={{
+                      background: "radial-gradient(circle at 50% 80%, hsl(218 80% 45% / 0.03) 0%, transparent 60%)",
+                    }}
+                  />
+
                   {/* Quote mark */}
-                  <span className="absolute top-4 right-6 text-4xl font-display text-foreground/[0.04] select-none leading-none">
+                  <span className="absolute top-5 right-6 text-5xl font-display text-primary/[0.06] select-none leading-none">
                     "
                   </span>
-                  <p className="text-foreground/90 leading-relaxed text-sm md:text-base mb-4">
+
+                  <p className="relative text-foreground/85 leading-relaxed text-[15px] mb-6">
                     "{feedback.text}"
                   </p>
-                  <div className="flex items-center gap-3">
+
+                  <div className="relative flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-xs font-display font-semibold text-primary">
-                        {feedback.name.slice(-2)}
+                      <span className="text-[10px] font-display font-bold text-primary uppercase">
+                        {feedback.name.charAt(0)}
                       </span>
                     </div>
                     <span className="text-sm text-muted-foreground font-medium">
