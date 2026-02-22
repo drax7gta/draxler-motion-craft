@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import characterImg from "@/assets/character-draxler.png";
 
 const blurFadeUp = {
   initial: { opacity: 0, y: 25, filter: "blur(8px)" },
@@ -8,91 +9,135 @@ const blurFadeUp = {
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden noise">
-      {/* Gradient orb background - more vibrant */}
+      {/* Gradient orb background - more vibrant & saturated */}
       <div className="absolute inset-0">
         <div
           className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/4 w-[1000px] h-[1000px] md:w-[1400px] md:h-[1400px] rounded-full animate-glow-pulse"
           style={{
             background:
-              "radial-gradient(circle, hsl(218 90% 45% / 0.45) 0%, hsl(218 85% 30% / 0.2) 35%, hsl(218 70% 20% / 0.08) 55%, transparent 70%)",
-            filter: "blur(60px)",
+              "radial-gradient(circle, hsl(218 95% 50% / 0.55) 0%, hsl(218 90% 35% / 0.25) 30%, hsl(218 75% 22% / 0.1) 50%, transparent 65%)",
+            filter: "blur(55px)",
           }}
         />
-        {/* Secondary glow for organic distortion feel */}
+        {/* Secondary glow for organic distortion */}
         <div
           className="absolute bottom-[-5%] left-[45%] -translate-x-1/2 w-[700px] h-[700px] rounded-[40%_60%_55%_45%] animate-glow-pulse"
           style={{
             background:
-              "radial-gradient(circle, hsl(225 95% 55% / 0.15) 0%, transparent 55%)",
-            filter: "blur(50px)",
+              "radial-gradient(circle, hsl(225 95% 55% / 0.2) 0%, transparent 50%)",
+            filter: "blur(45px)",
             animationDelay: "2s",
           }}
         />
-        {/* Vignette */}
+        {/* Stronger vignette */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse at center, transparent 35%, hsl(220 20% 4%) 100%)",
+              "radial-gradient(ellipse at center, transparent 30%, hsl(220 20% 4%) 100%)",
           }}
         />
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-10 text-center">
-        {/* Watermark */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none pointer-events-none">
-          <span className="font-display text-[12rem] md:text-[18rem] font-bold tracking-tighter text-foreground/[0.02] leading-none">
-            D
-          </span>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4">
+        {/* Left: Text */}
+        <div className="flex-1 text-center md:text-left max-w-xl">
+          {/* Watermark */}
+          <div className="absolute top-1/2 left-1/2 md:left-[25%] -translate-x-1/2 -translate-y-1/2 select-none pointer-events-none">
+            <span className="font-display text-[12rem] md:text-[18rem] font-bold tracking-tighter text-foreground/[0.02] leading-none">
+              D
+            </span>
+          </div>
+
+          <motion.p
+            {...blurFadeUp}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="text-sm md:text-base font-medium tracking-[0.3em] uppercase text-primary mb-6"
+          >
+            Motion Designer
+          </motion.p>
+
+          <motion.h1
+            {...blurFadeUp}
+            transition={{ duration: 0.8, delay: 0.35 }}
+            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9] mb-6"
+          >
+            Draxler
+          </motion.h1>
+
+          <motion.p
+            {...blurFadeUp}
+            transition={{ duration: 0.7, delay: 0.55 }}
+            className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed mb-10"
+          >
+            Crio vídeos curtos que param o scroll, prendem a atenção e convertem.
+            Cada frame é pensado para seu anúncio performar.
+          </motion.p>
+
+          <motion.div
+            {...blurFadeUp}
+            transition={{ duration: 0.6, delay: 0.75 }}
+            className="flex flex-col sm:flex-row items-center md:items-start justify-center md:justify-start gap-4"
+          >
+            <a
+              href="https://wa.me/+5521979108337"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 px-8 py-4 text-sm font-medium rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:scale-[1.02]"
+            >
+              Falar comigo
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+            <a
+              href="/projetos"
+              className="inline-flex items-center px-8 py-4 text-sm font-medium rounded-full border border-border/50 text-foreground hover:bg-secondary/50 transition-all duration-300"
+            >
+              Ver projetos
+            </a>
+          </motion.div>
         </div>
 
-        <motion.p
-          {...blurFadeUp}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-sm md:text-base font-medium tracking-[0.3em] uppercase text-primary mb-6"
-        >
-          Motion Designer
-        </motion.p>
-
-        <motion.h1
-          {...blurFadeUp}
-          transition={{ duration: 0.8, delay: 0.35 }}
-          className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9] mb-6"
-        >
-          Draxler
-        </motion.h1>
-
-        <motion.p
-          {...blurFadeUp}
-          transition={{ duration: 0.7, delay: 0.55 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto leading-relaxed mb-10"
-        >
-          Crio vídeos curtos que param o scroll, prendem a atenção e convertem.
-          Cada frame é pensado para seu anúncio performar.
-        </motion.p>
-
+        {/* Right: Character */}
         <motion.div
-          {...blurFadeUp}
-          transition={{ duration: 0.6, delay: 0.75 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          initial={{ opacity: 0, x: 40, filter: "blur(10px)" }}
+          animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+          transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+          className="relative flex-shrink-0 w-[65%] sm:w-[50%] md:w-[35%] lg:w-[30%] mt-4 md:mt-0"
         >
-          <a
-            href="https://wa.me/+5521979108337"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 px-8 py-4 text-sm font-medium rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:scale-[1.02]"
+          {/* Atmospheric blur behind character */}
+          <div
+            className="absolute inset-0 scale-110 rounded-full"
+            style={{
+              background: "radial-gradient(ellipse at 50% 60%, hsl(218 90% 50% / 0.12) 0%, transparent 70%)",
+              filter: "blur(40px)",
+            }}
+          />
+          {/* Blue rim glow */}
+          <div
+            className="absolute inset-0"
+            style={{
+              filter: "drop-shadow(0 0 18px hsl(218 90% 55% / 0.15))",
+            }}
           >
-            Falar comigo
-            <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-          <a
-            href="/projetos"
-            className="inline-flex items-center px-8 py-4 text-sm font-medium rounded-full border border-border/50 text-foreground hover:bg-secondary/50 transition-all duration-300"
-          >
-            Ver projetos
-          </a>
+            <img
+              src={characterImg}
+              alt="Draxler Character"
+              className="relative w-full h-auto object-contain"
+              style={{
+                filter: "drop-shadow(-8px 12px 20px hsl(220 20% 2% / 0.7))",
+              }}
+            />
+          </div>
+          {/* Floor shadow */}
+          <div
+            className="absolute -bottom-4 left-1/2 -translate-x-[55%] w-[70%] h-6"
+            style={{
+              background: "radial-gradient(ellipse, hsl(220 20% 2% / 0.6) 0%, transparent 70%)",
+              filter: "blur(8px)",
+            }}
+          />
         </motion.div>
       </div>
 

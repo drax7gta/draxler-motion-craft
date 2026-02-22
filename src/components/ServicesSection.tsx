@@ -39,7 +39,7 @@ const ServicesSection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="relative py-28 md:py-36" ref={ref}>
+    <section className="relative py-16 md:py-24" ref={ref}>
       {/* Subtle top separator */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
 
