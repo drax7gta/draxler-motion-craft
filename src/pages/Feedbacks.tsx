@@ -66,7 +66,7 @@ const Feedbacks = () => {
                 transition={{ duration: 0.6, delay: i * 0.12 }}
                 className="group"
               >
-                <div className="relative p-7 md:p-8 rounded-2xl border border-border/30 bg-card/40 hover:bg-card/70 hover:border-border/60 transition-all duration-500">
+                <div className="relative p-7 md:p-8 rounded-2xl border border-border/30 bg-card/40 hover:bg-card/70 hover:border-border/60 transition-all duration-500 min-h-[200px] flex flex-col justify-between">
                   {/* Inner glow on hover */}
                   <div
                     className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
@@ -80,12 +80,12 @@ const Feedbacks = () => {
                     "
                   </span>
 
-                  <p className="relative text-foreground/85 leading-relaxed text-[15px] mb-6">
+                  <p className="relative text-foreground/85 leading-relaxed text-[15px] mb-6 flex-1">
                     "{feedback.text}"
                   </p>
 
-                  <div className="relative flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="relative flex items-center gap-3 mt-auto">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <span className="text-[10px] font-display font-bold text-primary uppercase">
                         {feedback.name.charAt(0)}
                       </span>

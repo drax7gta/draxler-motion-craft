@@ -39,7 +39,14 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <Link to="/" className="relative z-10 flex items-center gap-2">
-          <img src={logoSrc} alt="Draxler" className="h-8 md:h-9 w-auto" />
+          <img
+            src={logoSrc}
+            alt="Draxler"
+            className="h-7 md:h-8 w-auto brightness-[1.15] contrast-[1.1]"
+            style={{
+              filter: "brightness(1.15) contrast(1.1) drop-shadow(0 0 6px hsl(218 90% 55% / 0.15))",
+            }}
+          />
         </Link>
 
         {/* Desktop Nav */}
