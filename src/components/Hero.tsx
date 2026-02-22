@@ -104,7 +104,7 @@ const Hero = () => {
           initial={{ opacity: 0, x: 40, filter: "blur(10px)" }}
           animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
           transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-          className="relative flex-shrink-0 w-[55%] sm:w-[40%] md:w-[30%] lg:w-[25%] mt-4 md:mt-0 self-end md:self-center"
+          className="relative flex-shrink-0 w-[70%] sm:w-[50%] md:w-[36%] lg:w-[30%] mt-4 md:mt-0 self-end md:self-center"
         >
           {/* Atmospheric blur behind character */}
           <div
