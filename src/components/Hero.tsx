@@ -39,7 +39,7 @@ const Hero = () => {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 py-20 md:py-0">
         {/* Left: Text */}
         <div className="flex-1 text-center md:text-left max-w-xl">
           {/* Watermark */}
@@ -104,7 +104,7 @@ const Hero = () => {
           initial={{ opacity: 0, x: 40, filter: "blur(10px)" }}
           animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
           transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-          className="relative flex-shrink-0 w-[65%] sm:w-[50%] md:w-[35%] lg:w-[30%] mt-4 md:mt-0"
+          className="relative flex-shrink-0 w-[55%] sm:w-[40%] md:w-[30%] lg:w-[25%] mt-4 md:mt-0 self-end md:self-center"
         >
           {/* Atmospheric blur behind character */}
           <div
@@ -114,9 +114,10 @@ const Hero = () => {
               filter: "blur(40px)",
             }}
           />
-          {/* Blue rim glow */}
-          <div
-            className="absolute inset-0"
+          {/* Floating animation wrapper */}
+          <motion.div
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             style={{
               filter: "drop-shadow(0 0 18px hsl(218 90% 55% / 0.15))",
             }}
@@ -129,10 +130,12 @@ const Hero = () => {
                 filter: "drop-shadow(-8px 12px 20px hsl(220 20% 2% / 0.7))",
               }}
             />
-          </div>
+          </motion.div>
           {/* Floor shadow */}
-          <div
-            className="absolute -bottom-4 left-1/2 -translate-x-[55%] w-[70%] h-6"
+          <motion.div
+            animate={{ scale: [1, 0.92, 1], opacity: [0.6, 0.4, 0.6] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -bottom-2 left-1/2 -translate-x-[55%] w-[70%] h-5"
             style={{
               background: "radial-gradient(ellipse, hsl(220 20% 2% / 0.6) 0%, transparent 70%)",
               filter: "blur(8px)",

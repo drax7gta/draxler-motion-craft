@@ -42,18 +42,16 @@ const VideoPlayer = ({ videoId, title, isShort = true }: VideoPlayerProps) => {
             {/* Overlay */}
             <div className="absolute inset-0 bg-background/30 group-hover:bg-background/15 transition-colors duration-500" />
 
-            {/* Play button - larger white area */}
+            {/* Play button - single simple circle */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:shadow-lg group-hover:shadow-primary/30">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary-foreground/95 flex items-center justify-center">
-                  <svg
-                    className="w-4 h-4 md:w-5 md:h-5 text-primary ml-0.5"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
+              <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-primary flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-primary/30">
+                <svg
+                  className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground ml-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
               </div>
             </div>
 
