@@ -75,14 +75,6 @@ const Hero = () => {
           </motion.p>
 
           <motion.h1
-            {...blurFadeUp}
-            transition={{ duration: 0.8, delay: 0.35 }}
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9] mb-6"
-          >
-            Draxler
-          </motion.h1>
-
-          <motion.h1
             className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9] mb-6 relative inline-block"
           >
             <span className="flex overflow-hidden" style={{ perspective: "600px" }}>
