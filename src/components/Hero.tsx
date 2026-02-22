@@ -6,6 +6,23 @@ const blurFadeUp = {
   animate: { opacity: 1, y: 0, filter: "blur(0px)" },
 };
 
+const draxlerLetters = "Draxler".split("");
+
+const letterVariants = {
+  hidden: { opacity: 0, y: 60, filter: "blur(12px)", rotateX: 90 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    rotateX: 0,
+    transition: {
+      duration: 0.6,
+      delay: 0.35 + i * 0.08,
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+    },
+  }),
+};
+
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden noise">
@@ -65,6 +82,33 @@ const Hero = () => {
             Draxler
           </motion.h1>
 
+          <motion.h1
+            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9] mb-6 relative inline-block"
+          >
+            <span className="flex overflow-hidden" style={{ perspective: "600px" }}>
+              {draxlerLetters.map((letter, i) => (
+                <motion.span
+                  key={i}
+                  custom={i}
+                  variants={letterVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="inline-block"
+                  style={{ transformOrigin: "bottom center" }}
+                >
+                  {letter}
+                </motion.span>
+              ))}
+            </span>
+            {/* Blue underline forming */}
+            <motion.span
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute -bottom-2 left-0 right-0 h-[3px] bg-primary origin-left rounded-full"
+            />
+          </motion.h1>
+
           <motion.p
             {...blurFadeUp}
             transition={{ duration: 0.7, delay: 0.55 }}
@@ -83,12 +127,9 @@ const Hero = () => {
               href="https://wa.me/+5521979108337"
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 px-8 py-4 text-sm font-medium rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:scale-[1.02]"
+              className="group inline-flex items-center gap-2 px-8 py-4 text-sm font-medium rounded-full bg-primary text-primary-foreground transition-all duration-300 hover:bg-primary/40 hover:shadow-xl hover:shadow-primary/25 hover:scale-[1.02]"
             >
               Falar comigo
-              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
             </a>
             <a
               href="/projetos"
@@ -101,9 +142,9 @@ const Hero = () => {
 
         {/* Right: Character */}
         <motion.div
-          initial={{ opacity: 0, x: 40, filter: "blur(10px)" }}
-          animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-          transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+          initial={{ opacity: 0, scale: 0.8, y: 80, filter: "blur(20px)" }}
+          animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
           className="relative flex-shrink-0 w-[70%] sm:w-[50%] md:w-[36%] lg:w-[30%] mt-4 md:mt-0 self-end md:self-center"
         >
           {/* Atmospheric blur behind character */}
