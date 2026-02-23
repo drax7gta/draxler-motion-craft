@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import characterImg from "@/assets/character-draxler.png";
+
+const MotionLink = motion.create(Link);
 
 const draxlerLetters = "Draxler".split("");
 
@@ -142,14 +145,14 @@ const Hero = () => {
             >
               Falar comigo
             </motion.a>
-            <motion.a
-              href="/projetos"
+            <MotionLink
+              to="/projetos"
               className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-sm font-medium rounded-full border border-primary/20 text-foreground/80 hover:bg-secondary/40 transition-all duration-300"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
             >
               Ver projetos
-            </motion.a>
+            </MotionLink>
           </motion.div>
         </div>
 
