@@ -36,15 +36,15 @@ const Header = () => {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
+      <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <Link to="/" className="relative z-10 flex items-center gap-2">
           <img
             src={logoSrc}
             alt="Draxler"
-            className="h-9 md:h-11 w-auto brightness-[1.15] contrast-[1.1]"
+            className="h-14 md:h-[4.5rem] w-auto"
             style={{
-              filter: "brightness(1.15) contrast(1.1) drop-shadow(0 0 6px hsl(218 90% 55% / 0.15))",
+              filter: "brightness(1.2) contrast(1.15) drop-shadow(0 0 8px hsl(218 90% 55% / 0.12))",
             }}
           />
         </Link>
@@ -94,55 +94,79 @@ const Header = () => {
           className="md:hidden relative z-10 w-8 h-8 flex flex-col items-center justify-center gap-1.5"
           aria-label="Menu"
         >
-          <span
-            className={`block w-5 h-px bg-foreground transition-all duration-300 ${
-              mobileOpen ? "rotate-45 translate-y-[3.5px]" : ""
-            }`}
+          <motion.span
+            animate={mobileOpen ? { rotate: 45, y: 3.5 } : { rotate: 0, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="block w-5 h-px bg-foreground"
           />
-          <span
-            className={`block w-5 h-px bg-foreground transition-all duration-300 ${
-              mobileOpen ? "-rotate-45 -translate-y-[3.5px]" : ""
-            }`}
+          <motion.span
+            animate={mobileOpen ? { rotate: -45, y: -3.5 } : { rotate: 0, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="block w-5 h-px bg-foreground"
           />
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - slide from right, 80% width */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden absolute inset-x-0 top-full bg-background/95 backdrop-blur-xl border-b border-border/50"
-          >
-            <nav className="flex flex-col px-6 py-6 gap-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`text-lg font-display font-medium tracking-wide ${
-                    location.pathname === item.path
-                      ? "text-foreground"
-                      : "text-muted-foreground"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              {location.pathname === "/" && (
-                <a
-                  href="https://wa.me/+5521979108337"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-5 py-3 text-sm font-medium rounded-full bg-primary text-primary-foreground mt-2"
-                >
-                  Falar comigo
-                </a>
-              )}
-            </nav>
-          </motion.div>
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="md:hidden fixed inset-0 top-0 bg-background/60 backdrop-blur-sm z-40"
+              onClick={() => setMobileOpen(false)}
+            />
+            {/* Panel */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+              className="md:hidden fixed top-0 right-0 bottom-0 w-[80%] bg-background/95 backdrop-blur-xl border-l border-border/30 z-50"
+            >
+              <nav className="flex flex-col px-8 pt-24 gap-6">
+                {navItems.map((item, i) => (
+                  <motion.div
+                    key={item.path}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 + i * 0.06, duration: 0.3 }}
+                  >
+                    <Link
+                      to={item.path}
+                      className={`text-xl font-display font-medium tracking-wide ${
+                        location.pathname === item.path
+                          ? "text-foreground"
+                          : "text-muted-foreground"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
+                ))}
+                {location.pathname === "/" && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.35, duration: 0.3 }}
+                  >
+                    <a
+                      href="https://wa.me/+5521979108337"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center px-5 py-3 text-sm font-medium rounded-full bg-primary text-primary-foreground mt-4"
+                    >
+                      Falar comigo
+                    </a>
+                  </motion.div>
+                )}
+              </nav>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.header>

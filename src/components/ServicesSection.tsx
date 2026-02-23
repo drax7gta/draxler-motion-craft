@@ -39,16 +39,16 @@ const ServicesSection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="relative py-16 md:py-24" ref={ref}>
+    <section className="relative pt-6 md:pt-16 pb-16 md:pb-24" ref={ref}>
       {/* Subtle top separator */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-px bg-gradient-to-r from-transparent via-border/40 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
+      <div className="max-w-7xl mx-auto px-5 md:px-10">
         <motion.div
           initial={blurFadeUp.initial}
           animate={inView ? blurFadeUp.animate : {}}
           transition={{ duration: 0.7 }}
-          className="mb-20 max-w-lg"
+          className="mb-12 md:mb-20 max-w-lg"
         >
           <p className="text-sm font-medium tracking-[0.2em] uppercase text-primary mb-3">
             Processo
@@ -61,27 +61,31 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border/20 rounded-2xl overflow-hidden border border-border/30">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-px bg-transparent md:bg-border/20 md:rounded-2xl overflow-hidden md:border md:border-border/30">
           {services.map((service, i) => (
             <motion.div
               key={service.title}
               initial={blurFadeUp.initial}
               animate={inView ? blurFadeUp.animate : {}}
               transition={{ duration: 0.6, delay: 0.12 * i }}
-              className="group relative p-8 md:p-10 bg-background hover:bg-card/80 transition-all duration-500"
+              className="group relative p-6 md:p-10 bg-card/30 md:bg-background rounded-[18px] md:rounded-none border border-border/20 md:border-0 hover:bg-card/60 md:hover:bg-card/80 transition-all duration-500"
             >
               {/* Inner glow on hover */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+              <div className="absolute inset-0 rounded-[18px] md:rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                 style={{
                   background: "radial-gradient(circle at 50% 50%, hsl(218 80% 45% / 0.04) 0%, transparent 70%)",
                 }}
               />
 
               <div className="relative z-10">
-                <span className="inline-block text-xs font-mono font-medium text-primary/60 tracking-widest mb-5">
+                <span className="inline-block text-xs font-mono font-medium text-primary/50 tracking-widest mb-4 md:mb-5"
+                  style={{
+                    textShadow: "0 0 20px hsl(218 90% 50% / 0.15)",
+                  }}
+                >
                   {service.icon}
                 </span>
-                <h3 className="font-display text-lg font-semibold mb-3 group-hover:text-primary transition-colors duration-300">
+                <h3 className="font-display text-base md:text-lg font-semibold mb-2 md:mb-3 group-hover:text-primary transition-colors duration-300">
                   {service.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed text-sm">
@@ -90,7 +94,7 @@ const ServicesSection = () => {
               </div>
 
               {/* Hover accent line */}
-              <div className="absolute bottom-0 left-8 right-8 h-px bg-primary/0 group-hover:bg-primary/20 transition-all duration-500" />
+              <div className="absolute bottom-0 left-6 right-6 md:left-8 md:right-8 h-px bg-primary/0 group-hover:bg-primary/20 transition-all duration-500" />
             </motion.div>
           ))}
         </div>
