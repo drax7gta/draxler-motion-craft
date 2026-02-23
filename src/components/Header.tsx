@@ -42,7 +42,7 @@ const Header = () => {
           <img
             src={logoSrc}
             alt="Draxler"
-            className="h-14 md:h-[4.5rem] w-auto"
+            className="h-20 md:h-24 w-auto"
             style={{
               filter: "brightness(1.2) contrast(1.15) drop-shadow(0 0 8px hsl(218 90% 55% / 0.12))",
             }}
