@@ -1,11 +1,6 @@
 import { motion } from "framer-motion";
 import characterImg from "@/assets/character-draxler.png";
 
-const blurFadeUp = {
-  initial: { opacity: 0, y: 25, filter: "blur(8px)" },
-  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
-};
-
 const draxlerLetters = "Draxler".split("");
 
 const letterVariants = {
@@ -23,30 +18,45 @@ const letterVariants = {
   }),
 };
 
+const blurFadeUp = {
+  initial: { opacity: 0, y: 25, filter: "blur(8px)" },
+  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+};
+
 const Hero = () => {
   return (
     <section className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden noise">
-      {/* Gradient orb - more saturated, deeper, dramatic */}
+      {/* Animated gradient orb */}
       <div className="absolute inset-0">
-        <div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/4 w-[900px] h-[900px] md:w-[1400px] md:h-[1400px] rounded-full animate-glow-pulse"
+        <motion.div
+          animate={{
+            scale: [1, 1.05, 1],
+            opacity: [0.5, 0.7, 0.5],
+          }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/4 w-[900px] h-[900px] md:w-[1400px] md:h-[1400px] rounded-full"
           style={{
             background:
               "radial-gradient(circle, hsl(218 100% 55% / 0.6) 0%, hsl(218 95% 40% / 0.3) 25%, hsl(218 80% 25% / 0.12) 45%, transparent 60%)",
             filter: "blur(50px)",
           }}
         />
-        {/* Secondary organic glow */}
-        <div
-          className="absolute bottom-[-5%] left-[45%] -translate-x-1/2 w-[700px] h-[700px] rounded-[40%_60%_55%_45%] animate-glow-pulse"
+        {/* Secondary organic glow with offset breathing */}
+        <motion.div
+          animate={{
+            scale: [1, 1.08, 1],
+            x: [0, 15, 0],
+            opacity: [0.18, 0.28, 0.18],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[-5%] left-[45%] -translate-x-1/2 w-[700px] h-[700px] rounded-[40%_60%_55%_45%]"
           style={{
             background:
               "radial-gradient(circle, hsl(225 100% 58% / 0.22) 0%, transparent 50%)",
             filter: "blur(45px)",
-            animationDelay: "2s",
           }}
         />
-        {/* Stronger vignette */}
+        {/* Vignette */}
         <div
           className="absolute inset-0"
           style={{
@@ -82,9 +92,7 @@ const Hero = () => {
             Motion Designer
           </motion.p>
 
-          <motion.h1
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9] mb-5 md:mb-6 relative inline-block"
-          >
+          <motion.h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9] mb-5 md:mb-6 relative inline-block">
             <span className="flex overflow-hidden" style={{ perspective: "600px" }}>
               {draxlerLetters.map((letter, i) => (
                 <motion.span
@@ -100,7 +108,7 @@ const Hero = () => {
                 </motion.span>
               ))}
             </span>
-            {/* Blue underline */}
+            {/* Blue underline growing from left */}
             <motion.span
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
@@ -119,35 +127,40 @@ const Hero = () => {
           </motion.p>
 
           <motion.div
-            {...blurFadeUp}
-            transition={{ duration: 0.6, delay: 0.75 }}
+            initial={{ opacity: 0, scale: 0.9, filter: "blur(8px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: 0.6, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row items-center md:items-start justify-center md:justify-start gap-3"
           >
-            <a
+            <motion.a
               href="https://wa.me/+5521979108337"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 text-sm font-medium rounded-full bg-primary text-primary-foreground transition-all duration-300 hover:bg-primary/40 hover:shadow-xl hover:shadow-primary/25 hover:scale-[1.02]"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
             >
               Falar comigo
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               href="/projetos"
               className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-sm font-medium rounded-full border border-primary/20 text-foreground/80 hover:bg-secondary/40 transition-all duration-300"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
             >
               Ver projetos
-            </a>
+            </motion.a>
           </motion.div>
         </div>
 
-        {/* Right: Character */}
+        {/* Right: Character with parallax entry */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8, y: 80, filter: "blur(20px)" }}
           animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
           className="relative flex-shrink-0 w-[55%] sm:w-[45%] md:w-[36%] lg:w-[30%] mt-2 md:mt-0 self-end md:self-center overflow-hidden md:overflow-visible"
         >
-          {/* Vignette behind character for deep integration */}
+          {/* Vignette behind character */}
           <div
             className="absolute inset-0 scale-125 rounded-full"
             style={{
@@ -163,7 +176,7 @@ const Hero = () => {
               filter: "blur(20px)",
             }}
           />
-          {/* Floating animation wrapper */}
+          {/* Floating animation */}
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -180,9 +193,9 @@ const Hero = () => {
               }}
             />
           </motion.div>
-          {/* Fade at bottom for mobile editorial crop effect */}
+          {/* Fade at bottom for mobile */}
           <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background to-transparent md:hidden" />
-          {/* Floor shadow - deeper */}
+          {/* Floor shadow */}
           <motion.div
             animate={{ scale: [1, 0.9, 1], opacity: [0.7, 0.45, 0.7] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -202,7 +215,11 @@ const Hero = () => {
         transition={{ delay: 1.5, duration: 1 }}
         className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10"
       >
-        <div className="w-px h-10 bg-gradient-to-b from-transparent via-muted-foreground/30 to-transparent" />
+        <motion.div
+          animate={{ scaleY: [1, 0.6, 1], opacity: [0.3, 0.15, 0.3] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="w-px h-10 bg-gradient-to-b from-transparent via-muted-foreground/30 to-transparent"
+        />
       </motion.div>
     </section>
   );

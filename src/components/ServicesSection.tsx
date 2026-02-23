@@ -1,6 +1,5 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
 
 const services = [
   {
@@ -29,9 +28,100 @@ const services = [
   },
 ];
 
-const blurFadeUp = {
-  initial: { opacity: 0, y: 25, filter: "blur(6px)" },
-  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+const TiltCard = ({ service, index, inView }: { service: typeof services[0]; index: number; inView: boolean }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [hovered, setHovered] = useState(false);
+
+  const mouseX = useMotionValue(0.5);
+  const mouseY = useMotionValue(0.5);
+
+  const rotateX = useSpring(useTransform(mouseY, [0, 1], [6, -6]), { stiffness: 300, damping: 30 });
+  const rotateY = useSpring(useTransform(mouseX, [0, 1], [-6, 6]), { stiffness: 300, damping: 30 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    mouseX.set((e.clientX - rect.left) / rect.width);
+    mouseY.set((e.clientY - rect.top) / rect.height);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0.5);
+    mouseY.set(0.5);
+    setHovered(false);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+      animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+      transition={{ duration: 0.6, delay: 0.12 * index, ease: [0.16, 1, 0.3, 1] }}
+      style={{ perspective: 800, transformStyle: "preserve-3d" }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={handleMouseLeave}
+    >
+      <motion.div
+        style={{ rotateX, rotateY }}
+        whileTap={{ scale: 0.98 }}
+        className="group relative p-6 md:p-10 bg-card/30 rounded-[18px] border border-border/20 hover:bg-card/60 transition-all duration-500 cursor-default"
+      >
+        {/* Animated inner glow */}
+        <motion.div
+          animate={{ opacity: hovered ? 1 : 0 }}
+          transition={{ duration: 0.5 }}
+          className="absolute inset-0 rounded-[18px] pointer-events-none"
+          style={{
+            background: "radial-gradient(circle at 50% 50%, hsl(218 80% 45% / 0.06) 0%, transparent 70%)",
+          }}
+        />
+
+        {/* Hover shadow */}
+        <motion.div
+          animate={{
+            boxShadow: hovered
+              ? "0 20px 40px hsl(218 90% 40% / 0.12), 0 0 0 1px hsl(218 80% 50% / 0.08)"
+              : "0 0 0 hsl(218 90% 40% / 0), 0 0 0 1px hsl(218 80% 50% / 0)",
+          }}
+          transition={{ duration: 0.4 }}
+          className="absolute inset-0 rounded-[18px] pointer-events-none"
+        />
+
+        <div className="relative z-10">
+          {/* Number with glitch-style entry */}
+          <motion.span
+            initial={{ opacity: 0, x: -10 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{
+              duration: 0.4,
+              delay: 0.2 + index * 0.12,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="inline-block text-xs font-mono font-medium text-primary/50 tracking-widest mb-4 md:mb-5"
+            style={{ textShadow: "0 0 20px hsl(218 90% 50% / 0.15)" }}
+          >
+            {service.icon}
+          </motion.span>
+
+          <h3 className="font-display text-base md:text-lg font-semibold mb-2 md:mb-3 group-hover:text-primary transition-colors duration-300">
+            {service.title}
+          </h3>
+          <p className="text-muted-foreground leading-relaxed text-sm">
+            {service.description}
+          </p>
+        </div>
+
+        {/* Energy line bottom */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={hovered ? { scaleX: 1 } : { scaleX: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute bottom-0 left-6 right-6 md:left-8 md:right-8 h-px bg-primary/30 origin-left"
+        />
+      </motion.div>
+    </motion.div>
+  );
 };
 
 const ServicesSection = () => {
@@ -45,8 +135,8 @@ const ServicesSection = () => {
 
       <div className="max-w-7xl mx-auto px-5 md:px-10">
         <motion.div
-          initial={blurFadeUp.initial}
-          animate={inView ? blurFadeUp.animate : {}}
+          initial={{ opacity: 0, y: 25, filter: "blur(6px)" }}
+          animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
           transition={{ duration: 0.7 }}
           className="mb-12 md:mb-20 max-w-lg"
         >
@@ -61,41 +151,9 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-px bg-transparent md:bg-border/20 md:rounded-2xl overflow-hidden md:border md:border-border/30">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
           {services.map((service, i) => (
-            <motion.div
-              key={service.title}
-              initial={blurFadeUp.initial}
-              animate={inView ? blurFadeUp.animate : {}}
-              transition={{ duration: 0.6, delay: 0.12 * i }}
-              className="group relative p-6 md:p-10 bg-card/30 md:bg-background rounded-[18px] md:rounded-none border border-border/20 md:border-0 hover:bg-card/60 md:hover:bg-card/80 transition-all duration-500"
-            >
-              {/* Inner glow on hover */}
-              <div className="absolute inset-0 rounded-[18px] md:rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                style={{
-                  background: "radial-gradient(circle at 50% 50%, hsl(218 80% 45% / 0.04) 0%, transparent 70%)",
-                }}
-              />
-
-              <div className="relative z-10">
-                <span className="inline-block text-xs font-mono font-medium text-primary/50 tracking-widest mb-4 md:mb-5"
-                  style={{
-                    textShadow: "0 0 20px hsl(218 90% 50% / 0.15)",
-                  }}
-                >
-                  {service.icon}
-                </span>
-                <h3 className="font-display text-base md:text-lg font-semibold mb-2 md:mb-3 group-hover:text-primary transition-colors duration-300">
-                  {service.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed text-sm">
-                  {service.description}
-                </p>
-              </div>
-
-              {/* Hover accent line */}
-              <div className="absolute bottom-0 left-6 right-6 md:left-8 md:right-8 h-px bg-primary/0 group-hover:bg-primary/20 transition-all duration-500" />
-            </motion.div>
+            <TiltCard key={service.title} service={service} index={i} inView={inView} />
           ))}
         </div>
       </div>
