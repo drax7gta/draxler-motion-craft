@@ -37,12 +37,12 @@ const Projetos = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="pt-28 md:pt-36 pb-24" ref={ref}>
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <div className="max-w-7xl mx-auto px-5 md:px-10">
           <motion.div
             initial={blurFadeUp.initial}
             animate={inView ? blurFadeUp.animate : {}}
             transition={{ duration: 0.7 }}
-            className="mb-12"
+            className="mb-10 md:mb-12"
           >
             <p className="text-sm font-medium tracking-[0.2em] uppercase text-primary mb-3">
               Portfólio
@@ -52,21 +52,22 @@ const Projetos = () => {
             </h1>
           </motion.div>
 
-          {/* Filters */}
+          {/* Filters - horizontal scroll on mobile */}
           <motion.div
             initial={blurFadeUp.initial}
             animate={inView ? blurFadeUp.animate : {}}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex flex-wrap gap-3 mb-12"
+            className="flex gap-2.5 md:gap-3 mb-10 md:mb-12 overflow-x-auto pb-2 -mx-5 px-5 md:mx-0 md:px-0 scrollbar-none"
+            style={{ WebkitOverflowScrolling: "touch" }}
           >
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActive(cat)}
-                className={`px-5 py-2.5 text-sm font-medium rounded-full transition-all duration-300 ${
+                className={`px-4 md:px-5 py-2 md:py-2.5 text-xs md:text-sm font-medium rounded-full transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
                   active === cat
                     ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                    : "bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                    : "bg-secondary/40 text-muted-foreground hover:bg-secondary hover:text-foreground"
                 }`}
               >
                 {cat}
@@ -74,21 +75,22 @@ const Projetos = () => {
             ))}
           </motion.div>
 
-          {/* Grid */}
+          {/* Grid - single column on small mobile */}
           <motion.div
             layout
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5"
           >
             <AnimatePresence mode="popLayout">
               {filtered.map((project, i) => (
                 <motion.div
                   key={project.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className={project.isShort ? "" : "col-span-2"}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.35, delay: i * 0.04 }}
+                  className={project.isShort ? "" : "sm:col-span-2"}
+                  whileTap={{ scale: 0.98 }}
                 >
                   <VideoPlayer
                     videoId={project.id}
@@ -105,6 +107,5 @@ const Projetos = () => {
     </div>
   );
 };
-
 
 export default Projetos;

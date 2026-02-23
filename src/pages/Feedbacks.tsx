@@ -8,26 +8,30 @@ const feedbacks = [
     id: 1,
     name: "Miguel — Lava Jato",
     text: "Curtiu demais o vídeo e ficou animado para projetos futuros juntos. Uma parceria que tá só começando.",
+    featured: true,
   },
   {
     id: 2,
     name: "QR Mídia",
     text: "A equipe toda aprovou o resultado do vídeo. Quando todo mundo bate o olho e gosta, é porque ficou certo.",
+    featured: false,
   },
   {
     id: 3,
     name: "Axen",
     text: "Gostaram muito do vídeo. A agência que me contratou destacou a entrega antes do prazo combinado e a qualidade do trabalho.",
+    featured: false,
   },
   {
     id: 4,
     name: "Conveniência Souza",
     text: "Só elogios. O vídeo superou o que esperavam e o feedback foi extremamente positivo do começo ao fim.",
+    wide: true,
   },
 ];
 
 const blurFadeUp = {
-  initial: { opacity: 0, y: 25, filter: "blur(6px)" },
+  initial: { opacity: 0, y: 20, filter: "blur(6px)" },
   animate: { opacity: 1, y: 0, filter: "blur(0px)" },
 };
 
@@ -39,12 +43,12 @@ const Feedbacks = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="pt-28 md:pt-36 pb-24" ref={ref}>
-        <div className="max-w-5xl mx-auto px-6 md:px-10">
+        <div className="max-w-5xl mx-auto px-5 md:px-10">
           <motion.div
             initial={blurFadeUp.initial}
             animate={inView ? blurFadeUp.animate : {}}
             transition={{ duration: 0.7 }}
-            className="mb-16"
+            className="mb-14"
           >
             <p className="text-sm font-medium tracking-[0.2em] uppercase text-primary mb-3">
               Depoimentos
@@ -57,40 +61,28 @@ const Feedbacks = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Bento-style layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {feedbacks.map((feedback, i) => (
               <motion.div
                 key={feedback.id}
                 initial={blurFadeUp.initial}
                 animate={inView ? blurFadeUp.animate : {}}
-                transition={{ duration: 0.6, delay: i * 0.12 }}
-                className="group"
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className={`group ${feedback.wide ? "md:col-span-2" : ""} ${feedback.featured ? "md:row-span-1" : ""}`}
               >
-                <div className="relative p-7 md:p-8 rounded-2xl border border-border/30 bg-card/40 hover:bg-card/70 hover:border-border/60 transition-all duration-500 min-h-[200px] flex flex-col justify-between">
-                  {/* Inner glow on hover */}
-                  <div
-                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                    style={{
-                      background: "radial-gradient(circle at 50% 80%, hsl(218 80% 45% / 0.03) 0%, transparent 60%)",
-                    }}
-                  />
+                <div
+                  className="relative p-5 md:p-7 rounded-[18px] border border-border/20 bg-card/30 hover:bg-card/55 hover:border-border/40 transition-all duration-500 hover:-translate-y-0.5 h-full flex flex-col justify-between overflow-hidden"
+                >
+                  {/* Blue left accent line */}
+                  <div className="absolute left-0 top-4 bottom-4 w-[2px] bg-primary/40 rounded-full" />
 
-                  {/* Quote mark */}
-                  <span className="absolute top-5 right-6 text-5xl font-display text-primary/[0.06] select-none leading-none">
-                    "
-                  </span>
-
-                  <p className="relative text-foreground/85 leading-relaxed text-[15px] mb-6 flex-1">
-                    "{feedback.text}"
+                  <p className="relative text-foreground/90 leading-relaxed text-[14px] md:text-[15px] pl-4 mb-5 flex-1">
+                    {feedback.text}
                   </p>
 
-                  <div className="relative flex items-center gap-3 mt-auto">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <span className="text-[10px] font-display font-bold text-primary uppercase">
-                        {feedback.name.charAt(0)}
-                      </span>
-                    </div>
-                    <span className="text-sm text-muted-foreground font-medium">
+                  <div className="relative pl-4 mt-auto">
+                    <span className="text-sm font-medium text-primary/80">
                       {feedback.name}
                     </span>
                   </div>
