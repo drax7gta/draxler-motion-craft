@@ -49,12 +49,12 @@ const Projetos = () => {
               </h1>
             </motion.div>
 
-            {/* Filters */}
+            {/* Filters - smooth horizontal scroll on mobile */}
             <motion.div
               initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
               animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="flex gap-2.5 md:gap-3 mb-10 md:mb-12 overflow-x-auto pb-2 -mx-5 px-5 md:mx-0 md:px-0 scrollbar-none"
+              className="flex gap-2.5 md:gap-3 mb-10 md:mb-12 overflow-x-auto pb-2 -mx-5 px-5 md:mx-0 md:px-0 scrollbar-none snap-x snap-mandatory"
               style={{ WebkitOverflowScrolling: "touch" }}
             >
               {categories.map((cat) => (
@@ -62,7 +62,7 @@ const Projetos = () => {
                   key={cat}
                   onClick={() => setActive(cat)}
                   whileTap={{ scale: 0.95 }}
-                  className={`px-4 md:px-5 py-2 md:py-2.5 text-xs md:text-sm font-medium rounded-full transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
+                  className={`px-4 md:px-5 py-2 md:py-2.5 text-xs md:text-sm font-medium rounded-full transition-all duration-300 whitespace-nowrap flex-shrink-0 snap-start ${
                     active === cat
                       ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
                       : "bg-secondary/40 text-muted-foreground hover:bg-secondary hover:text-foreground"
@@ -73,10 +73,10 @@ const Projetos = () => {
               ))}
             </motion.div>
 
-            {/* Grid */}
+            {/* Grid - single column on mobile for premium feel */}
             <motion.div
               layout
-              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5"
+              className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5"
             >
               <AnimatePresence mode="popLayout">
                 {filtered.map((project, i) => (
@@ -87,8 +87,8 @@ const Projetos = () => {
                     animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                     exit={{ opacity: 0, scale: 0.95, filter: "blur(6px)" }}
                     transition={{ duration: 0.4, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
-                    className={project.isShort ? "" : "sm:col-span-2"}
-                    whileTap={{ scale: 0.98 }}
+                    className={project.isShort ? "" : "col-span-2"}
+                    whileTap={{ scale: 0.97 }}
                   >
                     <VideoPlayer
                       videoId={project.id}
