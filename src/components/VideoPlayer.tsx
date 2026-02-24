@@ -1,5 +1,6 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useVideoPlayer } from "@/contexts/VideoPlayerContext";
 
 interface VideoPlayerProps {
   videoId: string;
@@ -8,7 +9,8 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer = ({ videoId, title, isShort = true }: VideoPlayerProps) => {
-  const [playing, setPlaying] = useState(false);
+  const { activeVideoId, openVideo, closeVideo } = useVideoPlayer();
+  const playing = activeVideoId === videoId;
   const [ripple, setRipple] = useState<{ x: number; y: number; id: number } | null>(null);
 
   const thumbnailUrl = isShort
@@ -25,7 +27,15 @@ const VideoPlayer = ({ videoId, title, isShort = true }: VideoPlayerProps) => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     setRipple({ x, y, id: Date.now() });
-    setTimeout(() => setPlaying(true), 300);
+    setTimeout(() => openVideo(videoId), 300);
+  }, [playing, openVideo, videoId]);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (playing) {
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = ""; };
+    }
   }, [playing]);
 
   return (
@@ -74,7 +84,7 @@ const VideoPlayer = ({ videoId, title, isShort = true }: VideoPlayerProps) => {
           )}
         </AnimatePresence>
 
-        {/* Glass play button */}
+        {/* Standardized glass play button */}
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.div
             whileHover={{ scale: 1.04 }}
@@ -114,7 +124,7 @@ const VideoPlayer = ({ videoId, title, isShort = true }: VideoPlayerProps) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
             className="fixed inset-0 z-[100] flex items-center justify-center"
-            onClick={() => setPlaying(false)}
+            onClick={closeVideo}
           >
             {/* Blurred backdrop */}
             <motion.div
@@ -139,7 +149,7 @@ const VideoPlayer = ({ videoId, title, isShort = true }: VideoPlayerProps) => {
               }}
               onClick={(e) => {
                 e.stopPropagation();
-                setPlaying(false);
+                closeVideo();
               }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">

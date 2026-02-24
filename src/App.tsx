@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { VideoPlayerProvider } from "@/contexts/VideoPlayerContext";
 import Index from "./pages/Index";
 import Projetos from "./pages/Projetos";
 import Feedbacks from "./pages/Feedbacks";
@@ -30,11 +31,13 @@ const AnimatedRoutes = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AnimatedRoutes />
-      </BrowserRouter>
+      <VideoPlayerProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AnimatedRoutes />
+        </BrowserRouter>
+      </VideoPlayerProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
