@@ -42,10 +42,13 @@ const VideoPlayer = ({ videoId, title, isShort = true }: VideoPlayerProps) => {
     <>
       {/* Card */}
       <div
-        className={`relative overflow-hidden rounded-xl bg-card group cursor-pointer border border-primary/10 hover:border-primary/20 transition-all duration-500 ${
+        className={`relative overflow-hidden rounded-2xl bg-card group cursor-pointer border-2 border-primary/15 hover:border-primary/30 transition-all duration-500 ${
           isShort ? "aspect-[9/16]" : "aspect-video"
         }`}
         onClick={handlePlay}
+        style={{
+          boxShadow: "0 0 0 1.5px hsl(218 90% 50% / 0.15), 0 8px 30px hsl(220 20% 2% / 0.4)",
+        }}
       >
         {/* Thumbnail */}
         <img
