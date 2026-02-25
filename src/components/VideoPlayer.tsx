@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useVideoPlayer } from "@/contexts/VideoPlayerContext";
 
@@ -115,77 +116,80 @@ const VideoPlayer = ({ videoId, title, isShort = true }: VideoPlayerProps) => {
         </div>
       </div>
 
-      {/* Cinematic Fullscreen Modal */}
-      <AnimatePresence>
-        {playing && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center"
-            onClick={closeVideo}
-          >
-            {/* Blurred backdrop */}
+      {/* Cinematic Fullscreen Modal - portaled to body */}
+      {createPortal(
+        <AnimatePresence>
+          {playing && (
             <motion.div
-              initial={{ backdropFilter: "blur(0px)" }}
-              animate={{ backdropFilter: "blur(20px)" }}
-              exit={{ backdropFilter: "blur(0px)" }}
-              transition={{ duration: 0.5 }}
-              className="absolute inset-0 bg-background/85"
-            />
-
-            {/* Close button */}
-            <motion.button
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ delay: 0.3 }}
-              className="absolute top-6 right-6 z-10 w-10 h-10 rounded-full flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors"
-              style={{
-                background: "hsl(220 20% 10% / 0.6)",
-                backdropFilter: "blur(8px)",
-                border: "1px solid hsl(220 12% 20% / 0.4)",
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                closeVideo();
-              }}
+              transition={{ duration: 0.4 }}
+              className="fixed inset-0 z-[9999] flex items-center justify-center"
+              onClick={closeVideo}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M18 6L6 18M6 6l12 12" />
-              </svg>
-            </motion.button>
-
-            {/* Video container */}
-            <motion.div
-              initial={{ scale: 0.85, opacity: 0, filter: "blur(10px)" }}
-              animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-              exit={{ scale: 0.9, opacity: 0, filter: "blur(8px)" }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className={`relative z-10 ${
-                isShort
-                  ? "w-[85vw] max-w-[400px] aspect-[9/16]"
-                  : "w-[92vw] max-w-[1100px] aspect-video"
-              } rounded-2xl overflow-hidden`}
-              style={{
-                boxShadow:
-                  "0 30px 80px hsl(220 20% 2% / 0.8), 0 0 60px hsl(218 90% 50% / 0.1)",
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <iframe
-                src={embedUrl}
-                title={title}
-                className="absolute inset-0 w-full h-full"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                frameBorder="0"
+              {/* Blurred backdrop */}
+              <motion.div
+                initial={{ backdropFilter: "blur(0px)" }}
+                animate={{ backdropFilter: "blur(20px)" }}
+                exit={{ backdropFilter: "blur(0px)" }}
+                transition={{ duration: 0.5 }}
+                className="absolute inset-0 bg-background/85"
               />
+
+              {/* Close button */}
+              <motion.button
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.3 }}
+                className="absolute top-6 right-6 z-10 w-10 h-10 rounded-full flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors"
+                style={{
+                  background: "hsl(220 20% 10% / 0.6)",
+                  backdropFilter: "blur(8px)",
+                  border: "1px solid hsl(220 12% 20% / 0.4)",
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  closeVideo();
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </motion.button>
+
+              {/* Video container */}
+              <motion.div
+                initial={{ scale: 0.85, opacity: 0, filter: "blur(10px)" }}
+                animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+                exit={{ scale: 0.9, opacity: 0, filter: "blur(8px)" }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className={`relative z-10 ${
+                  isShort
+                    ? "w-[85vw] max-w-[400px] aspect-[9/16]"
+                    : "w-[92vw] max-w-[1100px] aspect-video"
+                } rounded-2xl overflow-hidden`}
+                style={{
+                  boxShadow:
+                    "0 30px 80px hsl(220 20% 2% / 0.8), 0 0 60px hsl(218 90% 50% / 0.1)",
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <iframe
+                  src={embedUrl}
+                  title={title}
+                  className="absolute inset-0 w-full h-full"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  frameBorder="0"
+                />
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </>
   );
 };
