@@ -43,9 +43,12 @@ const VideoPlayer = ({ videoId, title, isShort = true }: VideoPlayerProps) => {
     <>
       {/* Card */}
       <div
-        className={`relative overflow-hidden rounded-xl bg-card group cursor-pointer border border-primary/10 hover:border-primary/20 transition-all duration-500 ${
+        className={`relative overflow-hidden rounded-xl group cursor-pointer border border-primary/15 hover:border-primary/30 transition-all duration-500 ${
           isShort ? "aspect-[9/16]" : "aspect-video"
         }`}
+        style={{
+          background: "hsl(220 25% 8%)",
+        }}
         onClick={handlePlay}
       >
         {/* Thumbnail */}
@@ -55,13 +58,18 @@ const VideoPlayer = ({ videoId, title, isShort = true }: VideoPlayerProps) => {
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           loading="lazy"
         />
+        {/* Uniform color overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: "linear-gradient(180deg, hsl(220 30% 6% / 0.35) 0%, hsl(220 30% 6% / 0.15) 40%, hsl(220 30% 6% / 0.45) 100%)",
+          }}
+        />
         {/* Inner shadow */}
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{ boxShadow: "inset 0 2px 20px hsl(220 20% 2% / 0.4)" }}
+          style={{ boxShadow: "inset 0 2px 20px hsl(220 20% 2% / 0.5)" }}
         />
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-background/25 group-hover:bg-background/10 transition-colors duration-500" />
 
         {/* Ripple */}
         <AnimatePresence>
