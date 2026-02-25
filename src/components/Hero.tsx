@@ -130,7 +130,7 @@ const Hero = () => {
             initial={{ opacity: 0, scale: 0.9, filter: "blur(8px)" }}
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 0.6, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row items-center md:items-start justify-center md:justify-start gap-3"
+            className="flex items-center md:items-start justify-center md:justify-start"
           >
             <motion.a
               href="https://wa.me/+5521979108337"
@@ -141,14 +141,6 @@ const Hero = () => {
               whileTap={{ scale: 0.97 }}
             >
               Falar comigo
-            </motion.a>
-            <motion.a
-              href="/projetos"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-sm font-medium rounded-full border border-primary/20 text-foreground/80 hover:bg-secondary/40 transition-all duration-300"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              Ver projetos
             </motion.a>
           </motion.div>
         </div>
